@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Funnel+Display:wght@300..800&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <title> Joel Shiwamber</title>
+
+  <style>
+    body {
+      text-align: center;
+      background: url("https://cdn.nba.com/teams/uploads/sites/1610612744/2024/07/feat-image_-curry-usab-20240718.png");
+      background-size: cover;
+      background-position: center;
+      color: Orange;
+        font-family: "Roboto", sans-serif;
+    }
+    p {
+      font-size: 22px;
+    }
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 18px;
+    }
+    input[type="submit"] {
+      background: blue;
+      color: red;
+      font-family: "Doto", sans-serif;
+    }
+    img {
+      border-radius: 100px;
+      
+    }
+  </style>
+</head>
+<body>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR48--n4tqyMc8bcwrAXpOykvwik8NQjhEYHQ&s">
+  <p>Hi! I'm the Goat Steph Curry</p>
+   <input type="name" id="Name" placeholder="Your name">
+  <input type="email" id="Email" placeholder="Your email"> 
+  <input type="submit" id="submit"> 
+</body>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDUn-01AcjNDhqLxxq1dI6OaxP8Q6skUbw",
+    authDomain: "joel-5bc2f.firebaseapp.com",
+    databaseURL: "https://joel-5bc2f-default-rtdb.firebaseio.com",
+    projectId: "joel-5bc2f",
+    storageBucket: "joel-5bc2f.firebasestorage.app",
+    messagingSenderId: "1076795210902",
+    appId: "1:1076795210902:web:c3bb77db6b354f7eb5d6b7",
+    measurementId: "G-180H54R66J"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const Name = document.querySelector("#Name") 
+const Email = document.querySelector("#Email")
+document.querySelector('#submit').addEventListener('click', Submit)
+
+
+function Submit() {
+  const timestamp = buildTimestamp()
+  
+  set(ref(db, timestamp), {
+	  Name: Name.value,
+      email: Email.value,
+  });
+
+  Name.value = ""
+  Email.value = ""
+}
+
+
+function buildTimestamp() {
+  const now = new Date();
+  let timestamp = now.getFullYear().toString() + "/";
+  //const month = now.toLocaleString('default', { month: 'long' });
+
+  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+  month = month.toString()
+  month = addLeadingZero(month)
+  timestamp += month + "/"; 
+
+  let date = now.getDate().toString()
+  date = addLeadingZero(date)
+  timestamp += date + "/";
+
+  let hours = now.getHours().toString()
+  hours = addLeadingZero(hours)
+  timestamp += hours + ":";
+
+  let minutes = now.getMinutes().toString()
+  minutes = addLeadingZero(minutes)
+  timestamp += minutes + ":";
+
+  let seconds = now.getSeconds().toString()
+  seconds = addLeadingZero(seconds)
+  timestamp += seconds;
+
+  return timestamp
+}
+
+function addLeadingZero(units) {
+	if (units.length < 2) {
+		units = "0" + units
+	}
+	return units
+}
+
+
+
+</script>
