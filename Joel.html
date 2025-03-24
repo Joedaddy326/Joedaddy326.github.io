@@ -41,6 +41,8 @@
   <p>Hi! I'm the Goat Steph Curry</p>
    <input type="name" id="Name" placeholder="Your name">
   <input type="email" id="Email" placeholder="Your email"> 
+  <input type="age" id="Age" placeholder="Your age"> 
+  
   <input type="submit" id="submit"> 
 </body>
 <script type="module">
@@ -69,6 +71,7 @@
 const db = getDatabase(app);
 const Name = document.querySelector("#Name") 
 const Email = document.querySelector("#Email")
+const Age = document.querySelector("#Age") 
 document.querySelector('#submit').addEventListener('click', Submit)
 
 
@@ -78,10 +81,12 @@ function Submit() {
   set(ref(db, timestamp), {
 	  Name: Name.value,
       email: Email.value,
+	  age: Age.value,
   });
 
   Name.value = ""
   Email.value = ""
+  Age.value = ""
 }
 
 
