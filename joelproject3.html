@@ -11,6 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
 <script src="/assets/jquery.js"></script>
 <link href='https://fonts.googleapis.com/css?family=Londrina+Shadow' rel='stylesheet' type='text/css'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 <style>
 body {
    font-family: "Sour Gummy", sans-serif;
@@ -37,6 +40,7 @@ h2 {
   color: yellow;
   font-family: "Ga Maamli", sans-serif;
   margin: 0px 0 70px 0;
+  font-family: "Winky Sans", sans-serif;
 }
 
 p {
@@ -79,7 +83,10 @@ small {
   background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaH1hpciKu64NXkFj3dz6ODeeGfuAUvgWVCw&s");
 }
 .dessert{
-  background-image: url("https://images.aiscribbles.com/46a32d590bbb4372ab063e2b155f5c46.png?v=fcac0a");
+  background-image: url("https://images.aiscribbles.com/46a32d590bbb4372ab063e2b155f5c46.png?v=fcac0a")
+}
+.dessert1{
+  background-image: url(https://static.vecteezy.com/system/resources/previews/053/276/520/large_2x/assorted-gourmet-cake-slices-with-fresh-berries-photo.jpeg)
 }
 .price {
   float: right;
@@ -128,6 +135,11 @@ small {
   <p>Chef Curry Ice Cream Sundae <span class="price">$12</span><br />
   <small>3/4 cup sauce; 3 scoops ice cream; something for crunch, like nuts; whipped cream; and garnishes, such as a maraschino cherry or crumbled cookies</small></p>
 </div>
+<div class="dessert1">
+	<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Chef Curry Cake Slices <span class="price">$8</span><br />
+  <small>Assorted Gourmet Cake Slices with Fresh Berries</small></p>
+</div>
  <br><br> 
    <input type="name" id="Name" placeholder="Your name">
   <input type="email" id="Email" placeholder="Your email"> 
@@ -162,15 +174,19 @@ small {
 			 const Name = document.querySelector("#Name") 
 			 const Email = document.querySelector("#Email")
 			  const quantities = document.querySelectorAll(".quantities")
-			  const itemsList = ["Steak", "Chicken Tender", "Ice Cream Sundae"]
+		     const prices = document.querySelectorAll(".price") 
+			  const itemsList = ["Steak", "Chicken Tender", "Ice Cream Sundae", "Cake Slices"]
 			 document.querySelector('#submit').addEventListener('click', Submit)
 
 
 			 function Submit() {
 			   const timestamp = buildTimestamp()
+				let total = 0
 			 	let cart = { }
 			 	for  (let i=0; i<quantities.length; i=i+1) {
 			 	  if (quantities[i].value != "0" && quantities[i].value != "") {	
+					let price = prices[i].innerHTML.replace('$', '')
+					total = total + quantities[i].value * price 
 			 	    cart[itemsList[i]] = parseInt(quantities[i].value) 
 			 	  }
 			 	  quantities[i].value = ""
@@ -180,7 +196,10 @@ small {
 			   set(ref(db, timestamp), {
 			 	  Name: Name.value,
 			       email: Email.value,
-	  cart: cart,
+	 			  cart: cart,
+			      totalPrice: total,
+			      paid: "not yet",
+
 			   });
 
 			   Name.value = ""
